@@ -2,25 +2,41 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
-const response = await fetch("http://localhost:3211/")
-const blogs = await response.json()
+let blogs = { getBlog: { data: [] } }; // empty fallback
+
+try {
+  const response = await fetch("http://localhost:3211/")
+  if (response.ok) {
+    blogs = await response.json()
+  } else {
+    console.error("Failed to fetch blogs, status:", response.status)
+  }
+} catch (error) {
+  console.error("Error fetching blogs:", error.message)
+}
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
 		<h1>Welcome to <span class="text-gradient">Content Generator Blog</span></h1>
 		<a href="/post">Create A Post</a>
-		<ul role="list" class="link-card-grid">
-			{blogs.getBlog.data.map(blog => {
-				return(
+		
+		{blogs?.getBlog?.data?.length > 0 ? (
+			<ul role="list" class="link-card-grid">
+				{blogs.getBlog.data.map(blog => (
 					<Card
 						href="https://docs.astro.build/"
 						title={blog.title}
 						body={blog.description}
 					/>
-				)
-			})}
-		</ul>
+				))}
+			</ul>
+		) : (
+			<div class="no-posts">
+				<p>No blog posts available. Start by creating your first post!</p>
+				<a href="/post" class="create-first-post">Create First Post</a>
+			</div>
+		)}
 	</main>
 </Layout>
 
@@ -80,5 +96,34 @@ const blogs = await response.json()
 		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
 		gap: 2rem;
 		padding: 0;
+	}
+	.no-posts {
+		text-align: center;
+		padding: 3rem 1rem;
+		border: 2px dashed rgba(var(--accent-light), 30%);
+		border-radius: 12px;
+		margin-top: 2rem;
+	}
+	.no-posts p {
+		margin-bottom: 1.5rem;
+		opacity: 0.8;
+	}
+	.create-first-post {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		background: linear-gradient(45deg, #6366f1, #8b5cf6);
+		color: white;
+		text-decoration: none;
+		border-radius: 8px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		border: 2px solid transparent;
+		box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+	}
+	.create-first-post:hover {
+		transform: translateY(-2px);
+		background: linear-gradient(45deg, #4f46e5, #7c3aed);
+		box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+		color: white;
 	}
 </style>
