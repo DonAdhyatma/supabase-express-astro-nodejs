@@ -1,4 +1,4 @@
-# This Repository is For Monorepo Project SEAN STACK
+# This Repository For Monorepo Project SEAN STACK
 
 Simple blog application built with SEAN Stack (Supabase, Express, Astro, Node.js).
 
@@ -21,7 +21,7 @@ Simple blog application built with SEAN Stack (Supabase, Express, Astro, Node.js
 1. Clone the repository
 
 ```bash
-git clone <https://github.com/DonAdhyatma/supabase-express-astro-nodejs>
+git clone https://github.com/DonAdhyatma/supabase-express-astro-nodejs
 cd supabase-express-astro-nodejs
 ```
 
