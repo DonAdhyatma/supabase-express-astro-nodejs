@@ -7,7 +7,8 @@ Simple blog application built with SEAN Stack (Supabase, Express, Astro, Node.js
 - **Frontend**: Astro
 - **Backend**: Express.js + Node.js
 - **Database**: Supabase
-- **Architecture**: Monorepo
+- **Architecture**: Monolithic
+- **Repository Strategy**: Monorepo
 
 ## Getting Started
 
